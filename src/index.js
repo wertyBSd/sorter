@@ -1,30 +1,58 @@
 class Sorter {
   constructor() {
-    // your implementation
+    this.arr = [];
+    this.castom = false;
+    Sorter.prototype.sortCompare = function(left, right) {
+      return 0;
+    };
   }
 
   add(element) {
-    // your implementation
+    this.arr.push(element);
   }
 
   at(index) {
-    // your implementation
+    return this.arr[index];
   }
 
   get length() {
-    // your implementation
+    return this.arr.length;
   }
 
   toArray() {
-    // your implementation
+    return this.arr;
   }
 
   sort(indices) {
-    // your implementation
+    if (this.castom) {
+      indices = indices.sort();
+      const left = indices[0];
+      const right = indices[1];
+      if (this.sortCompare(this.arr[left], this.arr[right]) > 0) {
+        const tmp = this.arr[left];
+        this.arr[left] = this.arr[right];
+        this.arr[right] = tmp;
+      }
+    } else {
+      if (Array.isArray(indices)) {
+        indices = indices.sort();
+        for (let i = 0, endI = indices.length - 1; i < endI; i++) {
+          for (var j = 0, endJ = endI - i; j < endJ; j++) {
+            if (this.arr[indices[j]] > this.arr[indices[j + 1]]) {
+              var swap = this.arr[indices[j]];
+              this.arr[indices[j]] = this.arr[indices[j + 1]];
+              this.arr[indices[j + 1]] = swap;
+            }
+          }
+        }
+      }
+    }
   }
 
-  setComparator(compareFunction) {
-    // your implementation
+  setComparator(func, thisArg) {
+    Sorter.prototype.sortCompare = func;
+    this.castom = true;
+    //console.log(sortCompare);
   }
 }
 
